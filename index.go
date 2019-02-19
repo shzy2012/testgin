@@ -30,6 +30,12 @@ func Logger() gin.HandlerFunc {
 	}
 }
 
+func index(context *gin.Context) {
+	context.JSON(200, gin.H{
+		"index": "i am index",
+	})
+}
+
 func main() {
 	router := gin.New()
 
@@ -41,6 +47,11 @@ func main() {
 			"message": "pong",
 		})
 	})
+
+	v1 := router.Group("/v1")
+	{
+		v1.GET("/", index)
+	}
 
 	server := &http.Server{
 		Addr:         ":8080",
