@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/shzy2012/testgin/logger"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -37,12 +39,21 @@ func index(context *gin.Context) {
 }
 
 func main() {
+
+	var thisLog logger.ILogger
+	thisLog = logger.NewLogger()
+	thisLog.Trace("helo")
+	thisLog.Info("helo")
+	thisLog.Warning("helo")
+	thisLog.Error("helo")
+
 	router := gin.New()
 
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 
 	router.GET("/index", func(c *gin.Context) {
+		time.Sleep(time.Second * 2)
 		c.JSON(200, gin.H{
 			"message": "pong",
 		})
