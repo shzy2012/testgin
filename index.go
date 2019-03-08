@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/shzy2012/testgin/logger"
-
 	"github.com/gin-gonic/gin"
+	"github.com/shzy2012/testgin/logger"
+	ctl "github.com/shzy2012/testgin/web/controller"
 )
 
 //Logger middleware
@@ -47,6 +47,8 @@ func main() {
 	thisLog.Warning("helo")
 	thisLog.Error("helo")
 
+	homeCtl := ctl.NewHomeController()
+
 	router := gin.New()
 
 	router.Use(gin.Logger())
@@ -61,7 +63,8 @@ func main() {
 
 	v1 := router.Group("/v1")
 	{
-		v1.GET("/", index)
+		v1.GET("/", homeCtl.Home)
+		v1.GET("/setnx", homeCtl.SetNX)
 	}
 
 	server := &http.Server{

@@ -65,5 +65,4 @@ func worker() {
 		io.Copy(ioutil.Discard, resp.Body)
 		log.Println("request=>", index)
 	}
-
 }
